@@ -13,20 +13,20 @@ export class FlashComponent implements OnInit {
     answer: 'No reaction :)',
     show: false,
   };
-  @Output() onToggleCard = new EventEmitter();
-  @Output() onDelete = new EventEmitter();
-  @Output() onEdit = new EventEmitter();
+  @Output() toggleCard = new EventEmitter();
+  @Output() delete = new EventEmitter();
+  @Output() edit = new EventEmitter();
   @Output() onRememberedChange = new EventEmitter();
 
-  toggleCard() {
-    this.onToggleCard.emit(this.flash.id);
+  onToggleCard() {
+    this.toggleCard.emit(this.flash.id);
   }
 
   deleteFlash() {
-    this.onDelete.emit(this.flash.id);
+    this.delete.emit(this.flash.id);
   }
   editFlash() {
-    this.onEdit.emit(this.flash.id);
+    this.edit.emit(this.flash.id);
   }
   markCorrect() {
     this.onRememberedChange.emit({
