@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Flash } from './flash';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Flash } from './flash.model';
 
 @Component({
   selector: 'app-flash',
   templateUrl: './flash.component.html',
   styleUrls: ['./flash.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlashComponent implements OnInit {
   @Input() flash: Flash = {
-    id: 1,
-    question: 'Rreact or Angular',
-    answer: 'No reaction :)',
+    id: 0,
+    question: '',
+    answer: '',
     show: false,
   };
   @Output() toggleCard = new EventEmitter();

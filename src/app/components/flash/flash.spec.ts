@@ -1,4 +1,4 @@
-import { Flash } from './flash';
+import { Flash } from './flash.model';
 
 describe('Flash', () => {
   it('should create an instance', () => {

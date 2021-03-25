@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Flash } from './components/flash/flash';
 import { FlashService } from './flash.service';
 
 @Component({
@@ -9,33 +8,50 @@ import { FlashService } from './flash.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  @ViewChild('flashForm', { static: true }) flashForm: NgForm;
-  title = 'Cards';
+  @ViewChild('flashForm', { static: false }) flashForm: NgForm;
   editing = false;
-  editingId: number;
+  editingId;
   flash = {
     question: '',
-    answer: '',
+    answer: ''
   };
+  flashs$;
   flashs;
   constructor(private flashService: FlashService) {
-    this.flashs = this.flashService.flashs;
+    this.flashs$ = this.flashService.flashs$;
   }
 
-  trackByFlashID(index, flash) {
+  trackByFlashId(index, flash) {
     return flash.id;
   }
+
+  handleSubmit(): void {
+    this.flashService.addFlash(this.flash);
+    this.handleClear();
+  }
+
+  handleClear() {
+    this.flash = {
+      question: '',
+      answer: '',
+    };
+    this.flashForm.reset();
+  }
+
   handleToggleCard(id) {
     this.flashService.toggleFlash(id);
   }
+
   handleDelete(id) {
     this.flashService.deleteFlash(id);
   }
-  handleEdit(id: number) {
-    this.flashService.getFlash(id);
+
+  handleEdit(id) {
+    this.flash = this.flashService.getFlash(id);
     this.editing = true;
     this.editingId = id;
   }
+
   handleUpdate() {
     this.flashService.updateFlash(this.editingId, this.flash);
     this.handleCancel();
@@ -46,18 +62,8 @@ export class AppComponent {
     this.editingId = undefined;
     this.handleClear();
   }
+
   handleRememberedChange({ id, flag }) {
     this.flashService.rememberedChange(id, flag);
-  }
-  handleSubmit(): void {
-    this.flashService.addFlash(this.flash);
-    this.handleClear();
-  }
-  handleClear() {
-    this.flash = {
-      question: '',
-      answer: '',
-    };
-    this.flashForm.reset();
   }
 }

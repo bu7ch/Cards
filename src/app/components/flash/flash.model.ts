@@ -1,4 +1,4 @@
-export class Flash {
+export interface Flash {
   question: string;
   id: number;
   answer: string;

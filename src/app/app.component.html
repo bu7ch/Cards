@@ -1,5 +1,5 @@
-<!-- <form #flashForm="ngForm">
-  <h1 class="is-size-3">Ajouter une question</h1>
+<form #flashForm="ngForm">
+  <h1 class="is-size-3">{{editing ? 'Edit': 'Add New'}}</h1>
   <div class="field">
     <label for="" class="label">Question</label>
     <div class="control">
@@ -14,20 +14,20 @@
     <div class="control">
       <input type="text" required class="input" name="answer"
       [(ngModel)]="flash.answer"
-      #answer="ngModel" [ngClass]="{'is-danger': answer.invalid && !answer.pristine}""
+      #answer="ngModel" [ngClass]="{'is-danger': answer.invalid && !answer.pristine}"
       >
     </div>
   </div>
   <button type="submit" class="button is-primary" (click)="handleSubmit()">Envoyer</button>
   <button class="button clear-btn" (click)="handleClear()">Effacer</button>
-</form> -->
+</form>
 
-<div class="flashs">
-  <app-flash *ngFor="let flashCopo of flashs; trackBy: trackByFlashID"
+<div class="flashs" *ngIf="flashs$ | async as flashs">
+  <app-flash *ngFor="let flashCopo of flashs; trackBy:trackByFlashID"
   [flash]="flashCopo"
-  (onToggleCard)="handleToggleCard($event)"
-  (onDelete)="handleDelete($event)"
-  (onEdit)="handleEdit($event)"
+  (toggleCard)="handleToggleCard($event)"
+    (delete)="handleDelete($event)"
+    (edit)="handleEdit($event)"
   (onRememberedChange)="handleRememberedChange($event)"
   ></app-flash>
 </div>
